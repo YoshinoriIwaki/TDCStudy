@@ -11,7 +11,11 @@ class Money implements Expression {
 		return new Money(amount * multiplier, currency);
 	}
 	Expression plus(Money addend) {
-		return new Money(amount + addend.amount, currency);
+		return new Sum(this, addend);
+	}
+	public Money reduce(Bank bank, String to) {
+		int rate = bank.rate(currency, to);
+		return new Money(amount / rate, to);
 	}
 	String currency() {
 		return currency;
